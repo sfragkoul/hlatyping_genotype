@@ -25,8 +25,8 @@ process HLAGENOTYPE {
     // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-        'biocontainers/YOUR-TOOL-HERE' }"
+        'https://depot.galaxyproject.org/singularity/arcas-hla:0.5.0--hdfd78af_0':
+        'biocontainers/arcas-hla:0.5.0--hdfd78af_0' }"
 
     input:
     // TODO nf-core: Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -35,11 +35,14 @@ process HLAGENOTYPE {
     //               https://github.com/nf-core/modules/blob/master/modules/nf-core/bwa/index/main.nf
     // TODO nf-core: Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
-    tuple val(meta), path(bam)
+    tuple val(meta), path(fastq)
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
-    tuple val(meta), path("*.bam"), emit: bam
+    tuple val(meta), path("*.p"), emit: p
+    tuple val(meta), path("*.json"), emit: json
+    tuple val(meta), path("*.json"), emit: json
+
     // TODO nf-core: List additional required output channels/values here
     path "versions.yml"           , emit: versions
 
@@ -85,7 +88,7 @@ process HLAGENOTYPE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        hlagenotype: \$(samtools --version |& sed '1!d ; s/samtools //')
+        arcashla: $VERSION
     END_VERSIONS
     """
 }

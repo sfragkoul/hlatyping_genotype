@@ -1,1 +1,0 @@
-# hlatyping_genotype

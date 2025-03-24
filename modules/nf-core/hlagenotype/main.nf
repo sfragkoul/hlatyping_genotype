@@ -37,6 +37,8 @@ process HLAGENOTYPE {
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
     tuple val(meta), path(fastq)
 
+    
+
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
     tuple val(meta), path("*.p"), emit: p
@@ -62,13 +64,17 @@ process HLAGENOTYPE {
     // TODO nf-core: Please replace the example samtools command below with your module's command
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
-    samtools \\
-        sort \\
+    arcasHLA \\
+        genotype \\
         $args \\
-        -@ $task.cpus \\
-        -o ${prefix}.bam \\
-        -T $prefix \\
+        -t $task.cpus \\
+        -o . \\
+        --temp temp_files/ \\
+        --log ${prefix}.log \\
+        $single_end \\
         $bam
+
+
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

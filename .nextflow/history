@@ -1,0 +1,1 @@
+2025-03-24 12:58:11	-	crazy_caravaggio	-	01261601260198a23ac4c66a82a39948	8ff5ee3b-80d5-4cb0-9a28-4642fcae94c6	nextflow run ./modules/nf-core/hlagenotype/main.nf --help

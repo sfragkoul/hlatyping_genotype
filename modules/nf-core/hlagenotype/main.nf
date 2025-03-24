@@ -35,15 +35,15 @@ process HLAGENOTYPE {
     //               https://github.com/nf-core/modules/blob/master/modules/nf-core/bwa/index/main.nf
     // TODO nf-core: Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
-    tuple val(meta), path(fastq)
+    tuple val(meta), path(fq.gz)
 
     
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
     tuple val(meta), path("*.p"), emit: p
-    tuple val(meta), path("*.json"), emit: json
-    tuple val(meta), path("*.json"), emit: json
+    tuple val(meta), path("*.em.json"), emit: em_json
+    tuple val(meta), path("*.genotype.json"), emit: genotype_json
 
     // TODO nf-core: List additional required output channels/values here
     path "versions.yml"           , emit: versions
@@ -72,7 +72,7 @@ process HLAGENOTYPE {
         --temp temp_files/ \\
         --log ${prefix}.log \\
         $single_end \\
-        $bam
+        $fq.gz
 
 
 
